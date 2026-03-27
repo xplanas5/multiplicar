@@ -260,10 +260,9 @@ function genGeometria() {
 
 const problemTemplates = [
   () => {
-    const candies = rand(3, 8) * rand(2, 6)
     const friends = rand(2, 6)
-    while (candies % friends !== 0) {}
-    const ans = candies / friends
+    const ans = rand(2, 8)
+    const candies = friends * ans
     return {
       question: `En Joan té ${candies} caramels i els reparteix entre ${friends} amics iguals. Quants caramels toca a cada amic?`,
       type: 'fill_in',
