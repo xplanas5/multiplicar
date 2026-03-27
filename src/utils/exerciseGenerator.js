@@ -605,6 +605,106 @@ function genEstadistica() {
   }
 }
 
+function genTaules() {
+  const table = rand(2, 12)
+  const multiplier = rand(1, 12)
+  const answer = table * multiplier
+  const type = rand(0, 2)
+  if (type === 0) {
+    return {
+      question: `${table} × ${multiplier} = ?`,
+      type: 'fill_in',
+      options: null,
+      correctAnswer: String(answer),
+      explanation: `${table} × ${multiplier} = ${answer}`,
+      hint: `Compta de ${table} en ${table} fins a ${multiplier} vegades`,
+    }
+  } else if (type === 1) {
+    return {
+      question: `${multiplier} × ${table} = ?`,
+      type: 'fill_in',
+      options: null,
+      correctAnswer: String(answer),
+      explanation: `${multiplier} × ${table} = ${answer}`,
+      hint: `La multiplicació és commutativa: és el mateix que ${table} × ${multiplier}`,
+    }
+  } else {
+    return {
+      question: `? × ${multiplier} = ${answer}`,
+      type: 'fill_in',
+      options: null,
+      correctAnswer: String(table),
+      explanation: `${table} × ${multiplier} = ${answer}, per tant ? = ${table}`,
+      hint: `Quin número multiplicat per ${multiplier} dóna ${answer}?`,
+    }
+  }
+}
+
+function genMcdMcm() {
+  const type = rand(0, 3)
+  if (type === 0) {
+    // MCD de dos nombres
+    const g = rand(2, 6)
+    let an = rand(2, 6), bn = rand(2, 6), tries = 0
+    while (gcd(an, bn) > 1 && tries++ < 20) bn = rand(2, 6)
+    const a = g * an, b = g * bn
+    const options = makeChoices(g, () => {
+      const w = rand(1, 9)
+      return w !== g ? w : g + 1
+    })
+    return {
+      question: `Quin és el MCD de ${a} i ${b}?`,
+      type: 'multiple_choice',
+      options,
+      correctAnswer: String(g),
+      explanation: `Descomposem: ${a} = ${g} × ${an}, ${b} = ${g} × ${bn}. Com que MCD(${an},${bn})=1, el MCD(${a},${b}) = ${g}`,
+      hint: `Busca el nombre més gran que divideix exactament ${a} i ${b}`,
+    }
+  } else if (type === 1) {
+    // MCM de dos nombres
+    const a = rand(2, 8), b = rand(2, 8)
+    const l = lcm(a, b)
+    const options = makeChoices(l, () => {
+      const w = l + rand(1, 3) * a
+      return w !== l ? w : l + a
+    })
+    return {
+      question: `Quin és el MCM de ${a} i ${b}?`,
+      type: 'multiple_choice',
+      options,
+      correctAnswer: String(l),
+      explanation: `MCM(${a},${b}) = ${l}. El ${l} és el múltiple més petit comú a ${a} i ${b}`,
+      hint: `Busca el nombre més petit que és múltiple de ${a} i de ${b}`,
+    }
+  } else if (type === 2) {
+    // Aplicació de MCD: repartir en grups iguals
+    const g = rand(2, 5)
+    let an = rand(2, 6), bn = rand(2, 6), tries = 0
+    while (gcd(an, bn) > 1 && tries++ < 20) bn = rand(2, 6)
+    const a = g * an, b = g * bn
+    return {
+      question: `Tens ${a} pomes i ${b} taronges. Vols fer bosses iguals (el màxim possible) sense que en sobri cap. Quants fruits hi ha a cada bossa?`,
+      type: 'fill_in',
+      options: null,
+      correctAnswer: String(g),
+      explanation: `MCD(${a},${b}) = ${g}. Pots fer ${an + bn} bosses de ${g} fruits (${an} de pomes i ${bn} de taronges)`,
+      hint: `Calcula el MCD de ${a} i ${b}`,
+    }
+  } else {
+    // Aplicació de MCM: coincidència periòdica
+    const a = rand(2, 6), b = rand(2, 6)
+    const l = lcm(a, b)
+    return {
+      question: `Un autobús passa cada ${a} minuts i un altre cada ${b} minuts. Si ara passen junts, d'aquí quants minuts tornaran a coincidir?`,
+      type: 'fill_in',
+      options: null,
+      correctAnswer: String(l),
+      explanation: `MCM(${a},${b}) = ${l} minuts. Passaran junts cada ${l} minuts`,
+      hint: `Calcula el mínim comú múltiple de ${a} i ${b}`,
+    }
+  }
+}
+
 const generators = {
   multiplicacio: genMultiplicacio,
   fraccions: genFraccions,
@@ -618,6 +718,8 @@ const generators = {
   algebra: genAlgebra,
   geometria_eso: genGeometriaEso,
   estadistica: genEstadistica,
+  taules: genTaules,
+  mcd_mcm: genMcdMcm,
 }
 
 export function generateExercises(topicId, count = 10) {

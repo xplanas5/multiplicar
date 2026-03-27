@@ -96,6 +96,38 @@ export const topics = {
       description: 'Problemes matemàtics de la vida quotidiana',
       details: 'Situacions reals amb operacions combinades',
     },
+    {
+      id: 'taules',
+      nom: 'Taules de Multiplicar',
+      icon: '🔢',
+      color: 'teal',
+      colorClasses: {
+        bg: 'bg-teal-500',
+        bgLight: 'bg-teal-50',
+        text: 'text-teal-600',
+        border: 'border-teal-200',
+        gradient: 'from-teal-400 to-teal-600',
+        badge: 'bg-teal-100 text-teal-700',
+      },
+      description: 'Practica totes les taules del 1 al 12',
+      details: 'Exercicis de memòria: escriu el resultat sense opcions',
+    },
+    {
+      id: 'mcd_mcm',
+      nom: 'MCD i MCM',
+      icon: '🔗',
+      color: 'cyan',
+      colorClasses: {
+        bg: 'bg-cyan-500',
+        bgLight: 'bg-cyan-50',
+        text: 'text-cyan-600',
+        border: 'border-cyan-200',
+        gradient: 'from-cyan-400 to-cyan-600',
+        badge: 'bg-cyan-100 text-cyan-700',
+      },
+      description: 'Màxim Comú Divisor i Mínim Comú Múltiple',
+      details: 'Càlcul de MCD i MCM i problemes d\'aplicació',
+    },
   ],
   eso: [
     {
