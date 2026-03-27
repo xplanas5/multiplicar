@@ -42,19 +42,22 @@ export default function TopicSelector() {
             const prog = progresses[topic.id]
             const accuracy = prog ? Math.round((prog.correct / prog.completed) * 100) : null
             return (
-              <button
+              <div
                 key={topic.id}
-                onClick={() => navigate(`/exercicis/${level}/${topic.id}`)}
-                className={`group bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-200 hover:-translate-y-1 border ${topic.colorClasses.border} text-left`}
+                className={`bg-white rounded-2xl p-5 shadow-sm hover:shadow-lg transition-all duration-200 border ${topic.colorClasses.border}`}
               >
-                <div className={`text-4xl mb-3 w-14 h-14 ${topic.colorClasses.bgLight} rounded-xl flex items-center justify-center font-bold ${topic.colorClasses.text}`}>
-                  {topic.icon}
+                <div className="flex items-start gap-3 mb-3">
+                  <div className={`text-2xl w-12 h-12 ${topic.colorClasses.bgLight} rounded-xl flex items-center justify-center font-bold ${topic.colorClasses.text} shrink-0`}>
+                    {topic.icon}
+                  </div>
+                  <div>
+                    <h2 className="text-base font-bold text-gray-800 leading-tight">{topic.nom}</h2>
+                    <p className="text-xs text-gray-500 mt-0.5">{topic.description}</p>
+                  </div>
                 </div>
-                <h2 className="text-lg font-bold text-gray-800 mb-1">{topic.nom}</h2>
-                <p className="text-sm text-gray-500 mb-4">{topic.description}</p>
 
                 {prog ? (
-                  <div className="space-y-1">
+                  <div className="space-y-1 mb-3">
                     <div className="flex justify-between text-xs text-gray-400">
                       <span>{prog.completed} exercicis</span>
                       <span className={`font-semibold ${accuracy >= 70 ? 'text-green-500' : accuracy >= 40 ? 'text-yellow-500' : 'text-red-400'}`}>
@@ -69,13 +72,24 @@ export default function TopicSelector() {
                     </div>
                   </div>
                 ) : (
-                  <p className="text-xs text-gray-300 italic">Sense activitat encara</p>
+                  <p className="text-xs text-gray-300 italic mb-3">Sense activitat encara</p>
                 )}
 
-                <div className={`mt-3 text-xs font-semibold ${topic.colorClasses.text} opacity-0 group-hover:opacity-100 transition-opacity`}>
-                  Practicar →
+                <div className="flex gap-2 mt-2">
+                  <button
+                    onClick={() => navigate(`/teoria/${level}/${topic.id}`)}
+                    className={`flex-1 py-2 px-3 rounded-xl border-2 ${topic.colorClasses.border} ${topic.colorClasses.text} text-xs font-bold hover:${topic.colorClasses.bgLight} transition-all`}
+                  >
+                    📖 Teoria
+                  </button>
+                  <button
+                    onClick={() => navigate(`/exercicis/${level}/${topic.id}`)}
+                    className={`flex-1 py-2 px-3 rounded-xl ${topic.colorClasses.bg} text-white text-xs font-bold hover:opacity-90 transition-all`}
+                  >
+                    ✏️ Practicar
+                  </button>
                 </div>
-              </button>
+              </div>
             )
           })}
         </div>
